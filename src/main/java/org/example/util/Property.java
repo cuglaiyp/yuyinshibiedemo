@@ -1,4 +1,4 @@
-package org.example;
+package org.example.util;
 
 import java.io.FileInputStream;
 import java.util.HashMap;

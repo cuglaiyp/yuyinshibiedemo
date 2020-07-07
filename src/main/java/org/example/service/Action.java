@@ -1,4 +1,4 @@
-package org.example;
+package org.example.service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,9 +8,13 @@ import java.util.List;
 
 public class Action {
     public final static int STANDARD_SIZE = 5 * 1024 * 1024;
-    static List<Long> ids = new ArrayList<Long>();
+    public static List<Long> ids = new ArrayList<Long>()/*{{
+        add((long) 820690105);
+        add((long) 820690181);
+        add((long) 820690227);
+    }}*/;
 
-    public void compute(File file) {
+    public void compute(File file, String useVocab) {
         int len = 0;
         List<byte[]> buffers = new ArrayList<>();
         byte[] buffer = new byte[STANDARD_SIZE];
@@ -21,7 +25,7 @@ public class Action {
                 buffers.add(Arrays.copyOfRange(buffer, 0, buffer.length));
             }
             for (int i = 0; i < buffers.size(); i++) {
-                ids.add(YuYinUtil.INSTANCE.requestServ(buffers.get(i)).getData().getTaskId());
+                ids.add(YuYin.INSTANCE.requestServ(buffers.get(i), useVocab).getData().getTaskId());
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class ConfigFrame extends JPanel {
     JRadioButton modal_0 = new JRadioButton("不过滤");
     JRadioButton modal_1 = new JRadioButton("部分");
     JRadioButton modal_2 = new JRadioButton("严格");
-    ButtonGroup FilterModal = new ButtonGroup(){{
+    public ButtonGroup FilterModal = new ButtonGroup(){{
         add(modal_0);
         add(modal_1);
         add(modal_2);
@@ -25,7 +25,7 @@ public class ConfigFrame extends JPanel {
     JRadioButton dirty_0 = new JRadioButton("不过滤");
     JRadioButton dirty_1 = new JRadioButton("过滤");
     JRadioButton dirty_2 = new JRadioButton("替换");
-    ButtonGroup FilterDirty = new ButtonGroup(){{
+    public ButtonGroup FilterDirty = new ButtonGroup(){{
         add(dirty_0);
         add(dirty_1);
         add(dirty_2);
@@ -33,7 +33,7 @@ public class ConfigFrame extends JPanel {
 
 
     JPanel defaultEffectPanel = new JPanel();
-    JCheckBox defaultEffect_0 = new JCheckBox("默认生效");
+    public JCheckBox defaultEffect_0 = new JCheckBox("默认生效");
 
 
 
@@ -55,7 +55,7 @@ public class ConfigFrame extends JPanel {
 
     public ConfigFrame(){
         //this.setPreferredSize(new Dimension(300,200));
-        this.setLayout(new GridLayout(4,1));
+        this.setLayout(new BorderLayout());
         modal_0.setActionCommand("0");
         modal_1.setActionCommand("1");
         modal_2.setActionCommand("2");
@@ -72,11 +72,13 @@ public class ConfigFrame extends JPanel {
         dirtyPanel.add(dirty_0);
         dirtyPanel.add(dirty_1);
         dirtyPanel.add(dirty_2);
+        //defaultEffectPanel.setLayout(null);
+        //defaultEffect_0.setBounds(0, 0, 50, 20);
         defaultEffectPanel.add(defaultEffect_0);
 
-        this.add(modalPanel);
-        this.add(dirtyPanel);
-        this.add(defaultEffectPanel);
+        this.add(modalPanel, BorderLayout.NORTH);
+        this.add(dirtyPanel, BorderLayout.CENTER);
+        this.add(defaultEffectPanel, BorderLayout.SOUTH);
     }
 
 }

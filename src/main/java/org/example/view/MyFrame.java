@@ -1,4 +1,7 @@
-package org.example;
+package org.example.view;
+
+import org.example.controller.Controller;
+import org.example.util.Property;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -18,14 +21,20 @@ public class MyFrame extends JFrame {
     public JMenuBar menuBar = new JMenuBar();
     public JMenu fileMenu = new JMenu("文件");
     public JMenu editMenu = new JMenu("设置");
-    public JMenu formatMenu = new JMenu("历史记录");
+    public JMenu hotWordsMenu = new JMenu("热词");
 
 
     public JMenuItem selectItem = new JMenuItem("选择文件");
     public JMenuItem saveItem = new JMenuItem("保存");
+    // -----------------------------------------------------
     public JMenuItem configItem = new JMenuItem("配置");
-
-    public JCheckBox TimeStamp = new JCheckBox("时间戳");
+    public JCheckBoxMenuItem TimeStamp = new JCheckBoxMenuItem("时间戳");
+    // -----------------------------------------------------------------
+    public JMenuItem createHotWords = new JMenuItem("创建热词表");
+    public JMenuItem deleteHotWords = new JMenuItem("删除热词表");
+    public JMenuItem listHotWords = new JMenuItem("列举热词表");
+    public JMenuItem updateHotWords = new JMenuItem("更新热词表");
+    public JMenu useHotWords = new JMenu("使用热词表");
 
     public JTextArea area = new JTextArea();;
     public JScrollPane textPanel = new JScrollPane(area);
@@ -37,16 +46,16 @@ public class MyFrame extends JFrame {
     public JPanel btnPanel = new JPanel();
     public Controller controller = new Controller(this);
 
-    MyFrame() {
+    public MyFrame() {
 
         fileChooser.setMultiSelectionEnabled(false);             //设为多选
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("mp3,w4p,wav", "mp3","w4p","wav"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("mp3,w4p,wav", "mp3", "w4p", "wav"));
         fileChooser.setCurrentDirectory(fileChooser.getSelectedFile());
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileSave.setCurrentDirectory(fileSave.getSelectedFile());
-        fileSave.setFileFilter(new FileNameExtensionFilter("doc,docx", "docx","doc"));
+        fileSave.setFileFilter(new FileNameExtensionFilter("doc,docx", "docx", "doc"));
         fileSave.setFileFilter(new FileNameExtensionFilter("txt", "txt"));
         fileSave.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         fileSave.setDialogTitle("保存数据");
@@ -66,9 +75,26 @@ public class MyFrame extends JFrame {
         TimeStamp.addItemListener(controller.timeStampChangeListener);
         TimeStamp.setSelected(Property.propMap.get("TimeStamp").equals("0"));
 
+        createHotWords.addActionListener(controller.hotWordsPanelListener);
+        listHotWords.addActionListener(controller.listVocabsListener);
+        updateHotWords.addActionListener(controller.updateVocabsListener);
+        deleteHotWords.addActionListener(controller.deleteVocabsListener);
+
+        hotWordsMenu.addMenuListener(controller.initialVocabs);
+
+        hotWordsMenu.add(createHotWords);
+        hotWordsMenu.add(new JPopupMenu.Separator());
+        hotWordsMenu.add(deleteHotWords);
+        hotWordsMenu.add(new JPopupMenu.Separator());
+        hotWordsMenu.add(listHotWords);
+        hotWordsMenu.add(new JPopupMenu.Separator());
+        hotWordsMenu.add(updateHotWords);
+        hotWordsMenu.add(new JPopupMenu.Separator());
+        hotWordsMenu.add(useHotWords);
+
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
-        menuBar.add(formatMenu);
+        menuBar.add(hotWordsMenu);
 
         area.setLineWrap(true);
         area.setWrapStyleWord(true);
